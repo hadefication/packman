@@ -1,3 +1,3 @@
 # Packman
 
-Just another package generator for [Laravel]().
+Just another package generator for [Laravel](https://laravel.com/).
