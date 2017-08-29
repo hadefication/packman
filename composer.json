@@ -1,5 +1,8 @@
 {
     "name": "hadefication/packman",
+    "description": "Laravel package boilerplate generator.",
+    "keywords": ["laravel"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Glen  Bangkila",
@@ -13,5 +16,8 @@
         "psr-4": {
             "Packman\\": "src/"
         }
-    }
+    },
+    "bin": [
+        "packman"
+    ]
 }
