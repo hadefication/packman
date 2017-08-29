@@ -1,0 +1,17 @@
+{
+    "name": "hadefication/packman",
+    "authors": [
+        {
+            "name": "Glen  Bangkila",
+            "email": "hadeinvane@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/console": "^3.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Packman\\": "src/"
+        }
+    }
+}

@@ -1,0 +1,10 @@
+<?php
+namespace {NAMESPACE};
+
+class {NAME}
+{
+    public function helloWorld()
+    {
+        return 'Hello World';
+    }
+}
