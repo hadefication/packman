@@ -2,28 +2,51 @@
 
 namespace Packman\Support;
 
-class Provider
+class Provider extends Generator
 {
 
-    protected $name;
-    protected $vendor;
+    /**
+     * Provider container
+     *
+     * @var string
+     */
     protected $provider;
+
+    /**
+     * Namespace container
+     *
+     * @var string
+     */
     protected $namespace;
 
-    public function __construct($name, $vendor)
+    /**
+     * Initialize
+     *
+     * @return void
+     */
+    protected function initialize()
     {
-        $this->name = $name;
-        $this->vendor = $vendor;
-        $this->namespace = join('\\', [ucfirst($vendor), ucfirst($name)]);
-        $this->provider = ucfirst($name) . "ServiceProvider";
+        $this->namespace = join('\\', [ucfirst($this->vendor), ucfirst($this->name)]);
+        $this->provider = ucfirst($this->name) . "ServiceProvider";
     }
 
+    /**
+     * Generate provider file to the supplied path
+     *
+     * @param  string $path the path where the provider file will be generated
+     * @return boolean
+     */
     public function generateTo($path)
     {
         return file_put_contents(join('/', [$path, "{$this->provider}.php"]), $this->getStub());
     }
 
-    protected function getVars()
+    /**
+     * Get the variables that will be parsed with the template/stub
+     *
+     * @return array
+     */
+    public function getVars()
     {
         return [
             'name' => $this->name,
@@ -32,7 +55,12 @@ class Provider
         ];
     }
 
-    protected function getStub()
+    /**
+     * Get the providers stub/template and parse all variables in it
+     *
+     * @return string 
+     */
+    public function getStub()
     {
         $stub = file_get_contents(dirname(__DIR__).'/stubs/provider.txt');
         foreach($this->getVars() as $key => $value) {

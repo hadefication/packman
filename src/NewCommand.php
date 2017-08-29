@@ -13,6 +13,11 @@ use Packman\Support\FileManager;
 class NewCommand extends Command
 {
 
+    /**
+     * Configure command settings
+     *
+     * @return void
+     */
     public function configure()
     {
         $this->setName('new')
@@ -21,6 +26,13 @@ class NewCommand extends Command
             ->addOption('vendor', null, InputOption::VALUE_OPTIONAL, 'The package vendor name', $this->getDefaultVendorName());
     }
 
+    /**
+     * Execute command
+     *
+     * @param  InputInterface  $input  the input inteface object to use
+     * @param  OutputInterface $output the output interface object to use
+     * @return void
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $name = $input->getArgument('name');
@@ -35,7 +47,11 @@ class NewCommand extends Command
         }
     }
 
-
+    /**
+     * Get the systems current logged in user as the default vendor
+     *
+     * @return string
+     */
     private function getDefaultVendorName()
     {
         if (!empty($_SERVER['USERNAME'])) {
@@ -49,6 +65,14 @@ class NewCommand extends Command
         }
     }
 
+    /**
+     * Verify if the current package already exists, if yes then
+     * throw an error message else then move forward!
+     *
+     * @param  string directory                 the directory of the package
+     * @param  OutputInterface $output          the output interface object to use
+     * @return void
+     */
     private function assertPackageNameDoesNotExists($directory, OutputInterface $output)
     {
         if (is_dir($directory)) {

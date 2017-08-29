@@ -2,26 +2,43 @@
 
 namespace Packman\Support;
 
-class Handler
+class Handler extends Generator
 {
 
-    protected $name;
-    protected $vendor;
+    /**
+     * Namespace container
+     *
+     * @var string
+     */
     protected $namespace;
 
-    public function __construct($name, $vendor)
+    /**
+     * Initialize
+     *
+     * @return void
+     */
+    public function initialize()
     {
-        $this->name = $name;
-        $this->vendor = $vendor;
-        $this->namespace = join('\\', [ucfirst($vendor), ucfirst($name)]);
+        $this->namespace = join('\\', [ucfirst($this->vendor), ucfirst($this->name)]);
     }
 
+    /**
+     * Generate handler class to the supplied path
+     *
+     * @param  string $path the path where the handler class will be generated
+     * @return boolean
+     */
     public function generateTo($path)
     {
         return file_put_contents(join('/', [$path, ucfirst($this->name).".php"]), $this->getStub());
     }
 
-    protected function getVars()
+    /**
+     * Get the variables to be parsed in with the template/stub
+     *
+     * @return array
+     */
+    public function getVars()
     {
         return [
             'name' => ucfirst($this->name),
@@ -29,7 +46,12 @@ class Handler
         ];
     }
 
-    protected function getStub()
+    /**
+     * Get the handles stub/template and parse all variables in it
+     *
+     * @return string
+     */
+    public function getStub()
     {
         $stub = file_get_contents(dirname(__DIR__).'/stubs/handler.txt');
         foreach($this->getVars() as $key => $value) {

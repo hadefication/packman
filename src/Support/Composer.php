@@ -2,21 +2,59 @@
 
 namespace Packman\Support;
 
-class Composer
+class Composer extends Generator
 {
+
+    /**
+     * Package name container
+     *
+     * @var string
+     */
     protected $package;
+
+    /**
+     * Namespace container
+     *
+     * @var string
+     */
     protected $namespace;
 
-    public function __construct($name, $vendor)
+    /**
+     * Provider name container
+     *
+     * @var string
+     */
+    protected $provider;
+
+    /**
+     * Make
+     *
+     */
+    protected function initialize()
     {
-        $this->package = join('/', [$vendor, $name]);
-        $this->namespace = join('\\\\', [ucfirst($vendor), ucfirst($name), '']);
-        $this->provider = join('', [$this->namespace, ucfirst($name) . 'ServiceProvider']);
+        $this->package = join('/', [$this->vendor, $this->name]);
+        $this->namespace = join('\\\\', [ucfirst($this->vendor), ucfirst($this->name), '']);
+        $this->provider = join('', [$this->namespace, ucfirst($this->name) . 'ServiceProvider']);
     }
 
-    protected function getStub()
+    /**
+     * Get the variable to parsed with the template/stub
+     *
+     * @return array
+     */
+    public function getVars()
     {
-        return [
+        return [];
+    }
+
+    /**
+     * Get the composer template/stub
+     *
+     * @return string
+     */
+    public function getStub()
+    {
+        return stripslashes(json_encode([
             "name" => $this->package,
             "description" => "Your package description here",
             "license" => "MIT",
@@ -28,8 +66,8 @@ class Composer
                     $this->namespace => "src/"
                 ]
             ],
-            "minimum-stability": "dev",
-            "prefer-stable": true,
+            "minimum-stability" => "dev",
+            "prefer-stable" => true,
             "extra" => [
                 "laravel" => [
                     "providers" => [
@@ -37,11 +75,17 @@ class Composer
                     ]
                 ]
             ]
-        ];
+        ], JSON_PRETTY_PRINT));
     }
 
+    /**
+     * Generate composer file to the supplied path
+     *
+     * @param  string $path the path where the composer file to be generated
+     * @return boolean
+     */
     public function generateTo($path)
     {
-        return file_put_contents(join('/', [$path, 'composer.json']), stripslashes(json_encode($this->getStub(), JSON_PRETTY_PRINT)));
+        return file_put_contents(join('/', [$path, 'composer.json']), $this->getStub());
     }
 }
