@@ -2,13 +2,12 @@
 
 namespace Packman;
 
+use Packman\Support\FileManager;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-
-use Packman\Support\FileManager;
 
 class NewCommand extends Command
 {
@@ -29,7 +28,7 @@ class NewCommand extends Command
     /**
      * Execute command
      *
-     * @param  InputInterface  $input  the input inteface object to use
+     * @param  InputInterface  $input  the input interface object to use
      * @param  OutputInterface $output the output interface object to use
      * @return void
      */
@@ -39,7 +38,7 @@ class NewCommand extends Command
         $vendor = $input->getOption('vendor');
         $directory = getcwd() . '/' . $name;
 
-        $this->assertPackageNameDoesNotExists($directory, $output);
+        $this->isPackageNameDoesNotExists($directory, $output);
 
         if (mkdir($directory)) {
             (new FileManager($name, $vendor, $directory))->generate();
@@ -73,7 +72,7 @@ class NewCommand extends Command
      * @param  OutputInterface $output          the output interface object to use
      * @return void
      */
-    private function assertPackageNameDoesNotExists($directory, OutputInterface $output)
+    private function isPackageNameDoesNotExists($directory, OutputInterface $output)
     {
         if (is_dir($directory)) {
             $segments = explode('/', $directory);

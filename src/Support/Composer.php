@@ -59,7 +59,7 @@ class Composer extends Generator
             "description" => "Your package description here",
             "license" => "MIT",
             "require" => [
-                "illuminate/support" => "^5.4"
+                "illuminate/support" => "^5.6"
             ],
             "autoload" => [
                 "psr-4" => [
