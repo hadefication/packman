@@ -55,7 +55,7 @@ class Composer extends Generator
     public function getStub()
     {
         return stripslashes(json_encode([
-            "name" => $this->package,
+            "name" => strtolower($this->package),
             "description" => "Your package description here",
             "license" => "MIT",
             "require" => [
