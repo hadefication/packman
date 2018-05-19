@@ -9,5 +9,4 @@ if (file_exists(__DIR__.'/../../autoload.php')) {
 
 $app = new Symfony\Component\Console\Application('Packman, just another Laravel package boilerplate generator.', '1.0.0');
 $app->add(new Packman\Commands\NewCommand);
-$app->add(new Packman\Commands\AddCommand);
 $app->run();

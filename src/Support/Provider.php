@@ -63,7 +63,7 @@ class Provider extends Generator
      */
     public function getStub()
     {
-        $stub = file_get_contents(dirname(__DIR__).'/stubs/provider.txt');
+        $stub = file_get_contents(dirname(__DIR__).'/Stubs/provider.txt');
         foreach($this->getVars() as $key => $value) {
             $stub = preg_replace("/\{$key\}/i", $value, $stub);
         }

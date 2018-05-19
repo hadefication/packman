@@ -53,7 +53,7 @@ class Handler extends Generator
      */
     public function getStub()
     {
-        $stub = file_get_contents(dirname(__DIR__).'/stubs/handler.txt');
+        $stub = file_get_contents(dirname(__DIR__).'/Stubs/handler.txt');
         foreach($this->getVars() as $key => $value) {
             $stub = preg_replace("/\{$key\}/i", $value, $stub);
         }
