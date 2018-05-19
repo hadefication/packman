@@ -1,6 +1,6 @@
 <?php
 
-namespace Packman;
+namespace Packman\Commands;
 
 use Packman\Support\FileManager;
 use Symfony\Component\Console\Command\Command;
