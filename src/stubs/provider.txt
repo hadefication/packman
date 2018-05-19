@@ -13,7 +13,7 @@ class {PROVIDER} extends ServiceProvider
     public function register()
     {
         $this->app->singleton('{NAME}', function () {
-            return $this->app->make('{NAMESPACE}\{NAME}');
+            return $this->app->make('{NAMESPACE}\{PASCAL_NAME}');
         });
     }
 

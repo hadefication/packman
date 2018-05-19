@@ -50,6 +50,7 @@ class Provider extends Generator
     {
         return [
             'name' => $this->name,
+            'pascal_name' => ucwords($this->name),
             'namespace' => $this->namespace,
             'provider' => $this->provider
         ];

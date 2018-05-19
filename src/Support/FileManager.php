@@ -88,7 +88,7 @@ class FileManager
     }
 
     /**
-     * Genrate facade class
+     * Generate facade class
      *
      * @return boolean
      */
@@ -99,7 +99,7 @@ class FileManager
     }
 
     /**
-     * Genrate handler class
+     * Generate handler class
      *
      * @return boolean
      */
