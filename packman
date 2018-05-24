@@ -7,6 +7,6 @@ if (file_exists(__DIR__.'/../../autoload.php')) {
     require __DIR__.'/vendor/autoload.php';
 }
 
-$app = new Symfony\Component\Console\Application('Packman, just another Laravel package boilerplate generator.', '1.0.1');
+$app = new Symfony\Component\Console\Application('Packman, just another Laravel package boilerplate generator.', '1.0.4');
 $app->add(new Packman\NewCommand);
 $app->run();
