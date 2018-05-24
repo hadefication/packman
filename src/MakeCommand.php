@@ -2,17 +2,16 @@
 
 namespace Hadefication\Packman;
 
+use Hadefication\Packman\Support\Helper;
 use Hadefication\Packman\Support\FileManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Hadefication\Packman\Support\Helper;
-use Symfony\Component\Console\Question\ConfirmationQuestion;
-use Symfony\Component\Console\Question\Question;
 
-class NewCommand extends Command
+class MakeCommand extends Command
 {
     /**
      * Configure command settings
@@ -21,12 +20,9 @@ class NewCommand extends Command
      */
     public function configure()
     {
-        $this->setName('new')
-            ->setDescription('Generate a Laravel package boilerplate.')
-            ->addArgument('name', InputArgument::OPTIONAL, 'The package name')
-            ->addOption('vendor', null, InputOption::VALUE_OPTIONAL, 'The package vendor name', $this->getDefaultVendorName());
+        $this->setName('make')->setDescription('Interactive mode to generate Laravel package boilerplate.');
     }
-  
+
     /**
      * Execute command
      *
@@ -36,21 +32,21 @@ class NewCommand extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $name = $input->getArgument('name');
+        $helper = $this->getHelper('question');
+        $name = $helper->ask($input, $output, $this->askAQuestion('Name your package: '));
+        $vendor = $helper->ask($input, $output, $this->askAQuestion("Who's the package vendor [defaults to ". Helper::currentUser() . "]: ", Helper::currentUser()));
 
-        if (empty($name)) {
-            $helper = $this->getHelper('question');
-            $question = new Question('Name your package: ', null);
-            $name = $helper->ask($input, $output, $question);
-            if (is_null($name)) {
-                $output->writeln('<comment>I\'ll see my self out!</comment>');
-                return;
-            }
+        if (is_null($name)) {
+            $output->writeln('<comment>I\'ll see my self out!</comment>');
+            return;
         }
-        
-        $vendor = $input->getOption('vendor');
+
+        $name = Helper::kebabCase($name);
+
         $directory = getcwd() . '/' . $name;
+
         $this->isPackageNameDoesNotExists($directory, $output);
+
         if (mkdir($directory)) {
             (new FileManager($name, $vendor, $directory))->generate();
             $output->writeln('<info>A new Laravel package named "'. $name .'" has been generated!</info>');
@@ -58,21 +54,15 @@ class NewCommand extends Command
     }
 
     /**
-     * Get the systems current logged in user as the default vendor
+     * Ask a question
      *
-     * @return string
+     * @param string $question
+     * @param any $default
+     * @return Question
      */
-    private function getDefaultVendorName()
+    private function askAQuestion($question, $default = null)
     {
-        if (!empty($_SERVER['USERNAME'])) {
-            return $_SERVER['USERNAME'];
-        } elseif (!empty($_SERVER['USER'])) {
-            return $_SERVER['USER'];
-        } elseif (get_current_user()) {
-            return get_current_user();
-        } else {
-            return 'acme';
-        }
+        return new Question($question, $default);
     }
 
     /**
