@@ -24,7 +24,7 @@ class NewCommand extends Command
         $this->setName('new')
             ->setDescription('Generate a Laravel package boilerplate.')
             ->addArgument('name', InputArgument::OPTIONAL, 'The package name')
-            ->addOption('vendor', null, InputOption::VALUE_OPTIONAL, 'The package vendor name', $this->getDefaultVendorName());
+            ->addOption('vendor', null, InputOption::VALUE_OPTIONAL, 'The package vendor name', Helper::currentUser());
     }
   
     /**
@@ -54,24 +54,6 @@ class NewCommand extends Command
         if (mkdir($directory)) {
             (new FileManager($name, $vendor, $directory))->generate();
             $output->writeln('<info>A new Laravel package named "'. $name .'" has been generated!</info>');
-        }
-    }
-
-    /**
-     * Get the systems current logged in user as the default vendor
-     *
-     * @return string
-     */
-    private function getDefaultVendorName()
-    {
-        if (!empty($_SERVER['USERNAME'])) {
-            return $_SERVER['USERNAME'];
-        } elseif (!empty($_SERVER['USER'])) {
-            return $_SERVER['USER'];
-        } elseif (get_current_user()) {
-            return get_current_user();
-        } else {
-            return 'acme';
         }
     }
 
