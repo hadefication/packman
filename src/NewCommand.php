@@ -21,7 +21,8 @@ class NewCommand extends Command
         $this->setName('new')
             ->setDescription('Generate a Laravel package boilerplate.')
             ->addArgument('name', InputArgument::REQUIRED, 'The package name')
-            ->addOption('vendor', null, InputOption::VALUE_OPTIONAL, 'The package vendor name', $this->getDefaultVendorName());
+            ->addOption('vendor', null, InputOption::VALUE_OPTIONAL, 'The package vendor name', $this->getDefaultVendorName())
+            ->addOption('basic', null, InputOption::VALUE_OPTIONAL, 'Generate basic files only');
     }
   
     /**
