@@ -66,6 +66,9 @@ class Composer extends Generator
                     $this->namespace => "src/"
                 ]
             ],
+            "require-dev" => [
+                "orchestra/testbench" => "~3.0"
+            ],
             "minimum-stability" => "dev",
             "prefer-stable" => true,
             "extra" => [
