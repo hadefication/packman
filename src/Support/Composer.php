@@ -33,8 +33,8 @@ class Composer extends Generator
     protected function initialize()
     {
         $this->package = join('/', [$this->vendor, $this->name]);
-        $this->namespace = join('\\\\', [ucfirst($this->vendor), ucfirst($this->name), '']);
-        $this->provider = join('', [$this->namespace, ucfirst($this->name) . 'ServiceProvider']);
+        $this->namespace = join('\\\\', [Helper::studlyCase($this->vendor), Helper::studlyCase($this->name), '']);
+        $this->provider = join('', [$this->namespace, Helper::studlyCase($this->name) . 'ServiceProvider']);
     }
 
     /**

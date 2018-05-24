@@ -26,8 +26,8 @@ class Provider extends Generator
      */
     protected function initialize()
     {
-        $this->namespace = join('\\', [ucfirst($this->vendor), ucfirst($this->name)]);
-        $this->provider = ucfirst($this->name) . "ServiceProvider";
+        $this->namespace = join('\\', [ucfirst($this->vendor), Helper::studlyCase($this->name)]);
+        $this->provider = Helper::studlyCase($this->name) . "ServiceProvider";
     }
 
     /**
@@ -49,8 +49,8 @@ class Provider extends Generator
     public function getVars()
     {
         return [
-            'name' => $this->name,
-            'pascal_name' => ucwords($this->name),
+            'name' => Helper::camelCase($this->name),
+            'pascal_name' => Helper::studlyCase($this->name),
             'namespace' => $this->namespace,
             'provider' => $this->provider
         ];

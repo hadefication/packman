@@ -25,8 +25,8 @@ class Facade extends Generator
      */
     protected function initialize()
     {
-        $this->namespace = join('\\', [ucfirst($this->vendor), ucfirst($this->name)]);
-        $this->facade = ucfirst($this->name) . "Facade";
+        $this->namespace = join('\\', [ucfirst($this->vendor), Helper::studlyCase($this->name)]);
+        $this->facade = Helper::studlyCase($this->name) . "Facade";
     }
 
     /**
@@ -48,7 +48,7 @@ class Facade extends Generator
     public function getVars()
     {
         return [
-            'name' => $this->name,
+            'name' => Helper::camelCase($this->name),
             'namespace' => $this->namespace,
             'facade' => $this->facade
         ];
