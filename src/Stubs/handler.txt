@@ -10,6 +10,6 @@ class {NAME}
      */
     public function helloWorld()
     {
-        return 'Hello World';
+        return 'Hello! Cold world!';
     }
 }
