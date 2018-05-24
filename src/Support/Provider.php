@@ -1,6 +1,6 @@
 <?php
 
-namespace Packman\Support;
+namespace Hadefication\Packman\Support;
 
 class Provider extends Generator
 {

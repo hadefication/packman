@@ -1,9 +1,8 @@
-
 <?php
 
-namespace Packman;
+namespace Hadefication\Packman;
 
-use Packman\Support\FileManager;
+use Hadefication\Packman\Support\FileManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
