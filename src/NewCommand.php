@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Hadefication\Packman\Support\Helper;
 
 class NewCommand extends Command
 {
@@ -40,11 +41,10 @@ class NewCommand extends Command
         $this->isPackageNameDoesNotExists($directory, $output);
         if (mkdir($directory)) {
             (new FileManager($name, $vendor, $directory))->generate();
-            $output->writeln('<info>'.ucfirst($name).' package has been generated, now start customizing!</info>');
+            $output->writeln('<info>A new Laravel package named "'. $name .'" has been generated!</info>');
         }
     }
-  
-  
+
     /**
      * Get the systems current logged in user as the default vendor
      *
@@ -62,7 +62,7 @@ class NewCommand extends Command
             return 'acme';
         }
     }
-  
+
     /**
      * Verify if the current package already exists, if yes then
      * throw an error message else then move forward!

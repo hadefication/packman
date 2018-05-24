@@ -19,7 +19,7 @@ class Handler extends Generator
      */
     public function initialize()
     {
-        $this->namespace = join('\\', [ucfirst($this->vendor), ucfirst($this->name)]);
+        $this->namespace = join('\\', [Helper::studlyCase($this->vendor), Helper::studlyCase($this->name)]);
     }
 
     /**
@@ -30,7 +30,7 @@ class Handler extends Generator
      */
     public function generateTo($path)
     {
-        return file_put_contents(join('/', [$path, ucfirst($this->name).".php"]), $this->getStub());
+        return file_put_contents(join('/', [$path, Helper::studlyCase($this->name).".php"]), $this->getStub());
     }
 
     /**
@@ -41,7 +41,7 @@ class Handler extends Generator
     public function getVars()
     {
         return [
-            'name' => ucfirst($this->name),
+            'name' => Helper::studlyCase($this->name),
             'namespace' => $this->namespace,
         ];
     }

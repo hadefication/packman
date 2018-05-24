@@ -1,0 +1,22 @@
+{
+    "name": "hadefication/laravel-preset",
+    "description": "Your package description here",
+    "license": "MIT",
+    "require": {
+        "illuminate/support": "^5.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Hadefication\\LaravelPreset\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Hadefication\\LaravelPreset\\LaravelPresetServiceProvider"
+            ]
+        }
+    }
+}
