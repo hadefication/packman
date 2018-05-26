@@ -67,9 +67,10 @@ class FileManager
         $this->generateHandler();
 
         if (! $this->basic) {
-            $this->makeTestDirectory();
+            $this->generateTests();
             $this->generateConfig();
             $this->generateView();
+            $this->generateTranslations();
         }
     }
 
@@ -84,9 +85,11 @@ class FileManager
         return mkdir(join('/', [$this->path, 'src']));
     }
 
-    public function makeTestDirectory()
+    public function generateTests()
     {
-        return mkdir(join('/', [$this->path, 'test']));
+        mkdir(join('/', [$this->path, 'tests']));
+        return (new TestCase($this->name, $this->vendor, $this->basic))
+            ->generateTo(join('/', [$this->path, 'tests']));
     }
 
     public function generateConfig()

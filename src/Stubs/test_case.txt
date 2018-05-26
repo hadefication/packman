@@ -1,0 +1,36 @@
+<?php
+
+namespace {VENDOR}\Tests;
+
+use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use {VENDOR}\{PACKAGE}\{PROVIDER};
+
+class TestCase extends OrchestraTestCase 
+{
+
+    /**
+     * Setup package's service providers
+     *
+     * @param \Illuminate\Foundation\Application $app
+     * @return array
+     */
+    protected function getPackageProviders($app)
+    {
+        return [
+            {PROVIDER}::class,
+        ];
+    }
+
+    /**
+     * Setup package's aliases
+     *
+     * @param \Illuminate\Foundation\Application $app
+     * @return array
+     */
+    protected function getPackageAliases($app)
+    {
+        return [
+            '{PACKAGE}' => '{VENDOR}\{PACKAGE}\{FACADE}'
+        ];
+    }
+}

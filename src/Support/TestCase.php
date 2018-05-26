@@ -2,7 +2,7 @@
 
 namespace Hadefication\Packman\Support;
 
-class View extends Generator
+class TestCase extends Generator
 {
 
     /**
@@ -23,7 +23,7 @@ class View extends Generator
      */
     public function generateTo($path)
     {
-        return file_put_contents(join('/', [$path, "hello.blade.php"]), $this->getStub());
+        return file_put_contents(join('/', [$path, "TestCase.php"]), $this->getStub());
     }
 
     /**
@@ -33,7 +33,12 @@ class View extends Generator
      */
     public function getVars()
     {
-        return [];
+        return [
+            'vendor' => Helper::studlyCase($this->vendor),
+            'package' => Helper::studlyCase($this->name),
+            'provider' => Helper::studlyCase($this->name) . 'ServiceProvider',
+            'facade' => Helper::studlyCase($this->name) . 'Facade'
+        ];
     }
 
     /**
@@ -43,9 +48,6 @@ class View extends Generator
      */
     public function getStub()
     {
-        $name = Helper::flatCase($this->name);
-        return <<<EOT
-<h1>{{ trans('{$name}.hello') }} {{ trans('{$name}.world') }}</h1>
-EOT;
+        return Helper::parseStub(dirname(__DIR__).'/Stubs/test_case.txt', $this->getVars());
     }
 }

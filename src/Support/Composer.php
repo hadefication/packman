@@ -26,6 +26,8 @@ class Composer extends Generator
      */
     protected $provider;
 
+    protected $alias;
+
     /**
      * Make
      *
@@ -35,6 +37,9 @@ class Composer extends Generator
         $this->package = join('/', [$this->vendor, $this->name]);
         $this->namespace = join('\\\\', [Helper::studlyCase($this->vendor), Helper::studlyCase($this->name), '']);
         $this->provider = join('', [$this->namespace, Helper::studlyCase($this->name) . 'ServiceProvider']);
+        $this->alias = Helper::studlyCase($this->name);
+        $this->facade = join('\\\\', [Helper::studlyCase($this->vendor), Helper::studlyCase($this->name), Helper::studlyCase($this->name) . 'Facade']);
+        $this->testNamespace = join('\\\\', [Helper::studlyCase($this->vendor), 'Tests', '']);
     }
 
     /**
@@ -55,19 +60,26 @@ class Composer extends Generator
     public function getStub()
     {
         return stripslashes(json_encode([
-            "name" => strtolower($this->package),
+            "name" => Helper::lowerCase($this->package),
             "description" => "Your package description here",
+            "keywords" => [],
+            "authors" => [],
             "license" => "MIT",
             "require" => [
-                "illuminate/support" => "^5.6"
+                "laravel/framework" => "~5.6.7"
+            ],
+            "require-dev" => [
+                "orchestra/testbench" => "~3.0"
             ],
             "autoload" => [
                 "psr-4" => [
                     $this->namespace => "src/"
                 ]
             ],
-            "require-dev" => [
-                "orchestra/testbench" => "~3.0"
+            "autoload-dev" => [
+                "psr-4" => [
+                    $this->testNamespace => "tests/"
+                ]
             ],
             "minimum-stability" => "dev",
             "prefer-stable" => true,
@@ -75,8 +87,12 @@ class Composer extends Generator
                 "laravel" => [
                     "providers" => [
                         $this->provider
+                    ],
+                    "aliases" => [
+                        $this->alias => $this->facade
                     ]
-                ]
+                ],
+                "packman" => true
             ]
         ], JSON_PRETTY_PRINT));
     }
