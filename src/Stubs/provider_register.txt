@@ -1,0 +1,4 @@
+        // Config
+        $this->mergeConfigFrom(
+            __DIR__ . '/config.php', '{NAME}'
+        );

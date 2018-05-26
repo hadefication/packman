@@ -24,7 +24,8 @@ class NewCommand extends Command
         $this->setName('new')
             ->setDescription('Generate a Laravel package boilerplate.')
             ->addArgument('name', InputArgument::OPTIONAL, 'The package name')
-            ->addOption('vendor', null, InputOption::VALUE_OPTIONAL, 'The package vendor name', Helper::currentUser());
+            ->addOption('vendor', null, InputOption::VALUE_OPTIONAL, 'The package vendor name', Helper::currentUser())
+            ->addOption('basic', null, InputOption::VALUE_NONE, 'Generate basic files only');
     }
   
     /**
@@ -49,10 +50,20 @@ class NewCommand extends Command
         }
         
         $vendor = $input->getOption('vendor');
+
+        $basic = $input->getOption('basic');
+
+        $output->writeln(var_dump($input->getOption('basic')));
+
         $directory = getcwd() . '/' . $name;
+
         $this->isPackageNameDoesNotExists($directory, $output);
+
         if (mkdir($directory)) {
-            (new FileManager($name, $vendor, $directory))->generate();
+            (new FileManager($name, $vendor, $directory))
+                ->onlyBasicFiles($basic)
+                ->generate();
+            
             $output->writeln('<info>A new Laravel package named "'. $name .'" has been generated!</info>');
         }
     }

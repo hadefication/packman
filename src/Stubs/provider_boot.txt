@@ -1,0 +1,20 @@
+        // Views
+        $this->loadViewsFrom(__DIR__ . '/views', '{NAME}');
+
+        // Translations
+        $this->loadTranslationsFrom(__DIR__ . '/translations', '{NAME}');
+
+        // Config
+        $this->publishes([
+            __DIR__ . '/config.php' => config_path('{NAME}.php'),
+        ], 'config');
+
+        // Views
+        $this->publishes([
+            __DIR__ . '/views' => resource_path('views/vendor/{NAME}'),
+        ], 'view');
+
+        // Translations
+        $this->publishes([
+            __DIR__.'/translations' => resource_path('lang/vendor/{NAME}'),
+        ], 'translations');

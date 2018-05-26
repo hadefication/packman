@@ -69,6 +69,17 @@ class Helper
     }
 
     /**
+     * Convert the given string to a flatcase
+     *
+     * @param string $value
+     * @return string
+     */
+    public static function flatCase($value)
+    {
+        return static::lowerCase(static::studlyCase($value));
+    }
+
+    /**
      * Return current user
      *
      * @return string
@@ -84,5 +95,21 @@ class Helper
         } else {
             return 'acme';
         }
+    }
+
+    /**
+     * Fetch and parse file stubs
+     *
+     * @param string $path
+     * @param array $vars
+     * @return string
+     */
+    public static function parseStub($path, $vars)
+    {
+        $stub = file_get_contents($path);
+        foreach($vars as $key => $value) {
+            $stub = preg_replace("/\{$key\}/i", $value, $stub);
+        }
+        return $stub;
     }
 }

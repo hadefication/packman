@@ -2,21 +2,14 @@
 
 namespace Hadefication\Packman\Support;
 
-class Facade extends Generator
+class Config extends Generator
 {
     /**
-     * Facade container
+     * Config name container
      *
      * @var string
      */
-    protected $facade;
-
-    /**
-     * Namespace container
-     *
-     * @var string
-     */
-    protected $namespace;
+    protected $config;
 
     /**
      * Initialize
@@ -25,8 +18,7 @@ class Facade extends Generator
      */
     protected function initialize()
     {
-        $this->namespace = join('\\', [ucfirst($this->vendor), Helper::studlyCase($this->name)]);
-        $this->facade = Helper::studlyCase($this->name) . "Facade";
+        $this->config = Helper::flatCase($this->name);
     }
 
     /**
@@ -37,7 +29,7 @@ class Facade extends Generator
      */
     public function generateTo($path)
     {
-        return file_put_contents(join('/', [$path, "{$this->facade}.php"]), $this->getStub());
+        return file_put_contents(join('/', [$path, "config.php"]), $this->getStub());
     }
 
     /**
@@ -47,11 +39,7 @@ class Facade extends Generator
      */
     public function getVars()
     {
-        return [
-            'name' => Helper::flatCase($this->name),
-            'namespace' => $this->namespace,
-            'facade' => $this->facade
-        ];
+        return [];
     }
 
     /**
@@ -60,7 +48,26 @@ class Facade extends Generator
      * @return string
      */
     public function getStub()
-    {
-        return Helper::parseStub(dirname(__DIR__).'/Stubs/facade.txt', $this->getVars());
+    {   
+        return <<<EOT
+<?php
+
+return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Hello
+    |--------------------------------------------------------------------------
+    |
+    | This value is a sample entry to your package config. Access it via config
+    | helper function like config('{$this->config}.hello') or 
+    | config()->get('{$this->config}.hello')
+    */
+    'hello' => 'World',
+
+    // 
+
+];
+EOT;
     }
 }

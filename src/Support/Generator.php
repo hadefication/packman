@@ -20,22 +20,32 @@ abstract class Generator
     protected $vendor;
 
     /**
+     * Basic mode container
+     *
+     * @var bool
+     */
+    protected $basic;
+    
+
+    /**
      * Constructor
      *
      * @param string $name                      the package's name
      * @param string $vendor                    the package's vendor
+     * @param boolean $basic                    flag to only generate basic files
      */
-    public function __construct($name, $vendor)
+    public function __construct($name, $vendor, $basic = false)
     {
         $this->name = $name;
         $this->vendor = $vendor;
+        $this->basic = $basic;
 
         // Fire post initialization hook!
         $this->initialize();
     }
 
     /**
-     * Post intialization hook, add custom setters here.
+     * Post initialization hook, add custom setters here.
      *
      * @return void
      */

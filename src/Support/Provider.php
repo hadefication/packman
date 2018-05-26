@@ -26,7 +26,7 @@ class Provider extends Generator
      */
     protected function initialize()
     {
-        $this->namespace = join('\\', [ucfirst($this->vendor), Helper::studlyCase($this->name)]);
+        $this->namespace = join('\\', [Helper::studlyCase($this->vendor), Helper::studlyCase($this->name)]);
         $this->provider = Helper::studlyCase($this->name) . "ServiceProvider";
     }
 
@@ -48,11 +48,26 @@ class Provider extends Generator
      */
     public function getVars()
     {
+        $providerRegisterArgs = Helper::parseStub(dirname(__DIR__).'/Stubs/provider_register.txt', [
+            'name' => Helper::flatCase($this->name, '_')
+        ]);
+
+        $providerBootArgs = Helper::parseStub(dirname(__DIR__).'/Stubs/provider_boot.txt', [
+            'name' => Helper::flatCase($this->name, '_')
+        ]);
+
+        if ($this->basic) {
+            $providerBootArgs = "\t\t// ";
+            $providerRegisterArgs = "\t\t// ";
+        }
+        
         return [
-            'name' => Helper::camelCase($this->name),
+            'name' => Helper::flatCase($this->name),
             'pascal_name' => Helper::studlyCase($this->name),
             'namespace' => $this->namespace,
-            'provider' => $this->provider
+            'provider' => $this->provider,
+            'boot' => $providerBootArgs,
+            'register' => $providerRegisterArgs
         ];
     }
 
@@ -63,10 +78,6 @@ class Provider extends Generator
      */
     public function getStub()
     {
-        $stub = file_get_contents(dirname(__DIR__).'/Stubs/provider.txt');
-        foreach($this->getVars() as $key => $value) {
-            $stub = preg_replace("/\{$key\}/i", $value, $stub);
-        }
-        return $stub;
+        return Helper::parseStub(dirname(__DIR__).'/Stubs/provider.txt', $this->getVars());
     }
 }
